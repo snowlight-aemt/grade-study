@@ -17,7 +17,8 @@ public class GradeAdvanceServiceTest {
 
     TargetsGen mockGen = Mockito.mock(TargetsGen.class);
     TargetExporter mockExporter = Mockito.mock(TargetExporter.class);
-    GradeAdvanceService gradeAdvanceService = new GradeAdvanceService(status, mockGen, mockExporter);
+    AdvanceApplier mockApplier = Mockito.mock(AdvanceApplier.class);
+    GradeAdvanceService gradeAdvanceService = new GradeAdvanceService(status, mockGen, mockExporter, mockApplier);
 
     @BeforeEach
     public void setUp() throws IOException {
@@ -54,15 +55,44 @@ public class GradeAdvanceServiceTest {
         Assertions.assertThat(result).isEqualTo(AdvanceResult.TARGET_EXPORT_FAILED);
     }
 
+    @Test
+    public void applyFail() {
+        BDDMockito
+                .given(mockGen.gen())
+                .willReturn(Mockito.mock(Targets.class));
+        BDDMockito
+                .given(mockApplier.apply(Mockito.any(Targets.class)))
+                .willThrow(new RuntimeException("!"));
+
+        AdvanceResult result = gradeAdvanceService.advance();
+        Assertions.assertThat(result).isEqualTo(AdvanceResult.TARGET_APPLY_FAILED);
+    }
+
+
+    @Test
+    public void applySuccess() {
+        BDDMockito
+                .given(mockGen.gen())
+                .willReturn(Mockito.mock(Targets.class));
+        BDDMockito
+                .given(mockApplier.apply(Mockito.any(Targets.class)))
+                .willReturn(Mockito.mock(ApplyResult.class));
+
+        AdvanceResult result = gradeAdvanceService.advance();
+        Assertions.assertThat(result).isEqualTo(AdvanceResult.SUCCESS);
+    }
+
     private class GradeAdvanceService {
         private final Status status;
         private final TargetsGen targetsGen;
         private final TargetExporter targetExporter;
+        private final AdvanceApplier advanceApplier;
 
-        public GradeAdvanceService(Status status, TargetsGen targetsGen, TargetExporter targetExporter) {
+        public GradeAdvanceService(Status status, TargetsGen targetsGen, TargetExporter targetExporter, AdvanceApplier advanceApplier) {
             this.status = status;
             this.targetsGen = targetsGen;
             this.targetExporter = targetExporter;
+            this.advanceApplier = advanceApplier;
         }
 
         public AdvanceResult advance() {
@@ -82,7 +112,13 @@ public class GradeAdvanceServiceTest {
                 return AdvanceResult.TARGET_EXPORT_FAILED;
             }
 
-            return null;
+            try {
+                advanceApplier.apply(targets);
+            } catch (Exception e) {
+                return AdvanceResult.TARGET_APPLY_FAILED;
+            }
+
+            return AdvanceResult.SUCCESS;
         }
     }
 
@@ -97,6 +133,12 @@ public class GradeAdvanceServiceTest {
 
     private class TargetExporter {
         public void export(Path path, Targets targets) {
+        }
+    }
+
+    private class AdvanceApplier {
+        public ApplyResult apply(Targets targets) {
+            return null;
         }
     }
 }
