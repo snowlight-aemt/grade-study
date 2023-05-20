@@ -13,13 +13,13 @@ import java.nio.file.Paths;
 
 public class GradeAdvanceServiceTest {
     Path path = Paths.get("build/status");
-    Status status = new Status(path);
+    States states = new States(path);
 
     TargetsGen mockGen = Mockito.mock(TargetsGen.class);
     TargetExporter mockExporter = Mockito.mock(TargetExporter.class);
     AdvanceApplier mockApplier = Mockito.mock(AdvanceApplier.class);
     TargetsImporter mockImporter = Mockito.mock(TargetsImporter.class);;
-    GradeAdvanceService gradeAdvanceService = new GradeAdvanceService(status, mockGen, mockExporter, mockImporter, mockApplier);
+    GradeAdvanceService gradeAdvanceService = new GradeAdvanceService(states, mockGen, mockExporter, mockImporter, mockApplier);
 
     @BeforeEach
     public void setUp() throws IOException {
@@ -28,7 +28,7 @@ public class GradeAdvanceServiceTest {
 
     @Test
     public void alreadyCompleted() {
-        status.set(AdvanceStatus.COMPLETED);
+        states.set(AdvanceStatus.COMPLETED);
         AdvanceResult result = gradeAdvanceService.advance();
         Assertions.assertThat(result).isEqualTo(AdvanceResult.ALREADY_COMPLETED);
     }
@@ -79,7 +79,7 @@ public class GradeAdvanceServiceTest {
                 .willThrow(new RuntimeException("!"));
 
         gradeAdvanceService.advance();
-        Assertions.assertThat(status.get()).isEqualTo(AdvanceStatus.APPLY_FAILED);
+        Assertions.assertThat(states.get()).isEqualTo(AdvanceStatus.APPLY_FAILED);
     }
 
     @Test
@@ -97,7 +97,7 @@ public class GradeAdvanceServiceTest {
 
     @Test
     public void states_applySuccess_when_applyFailed() {
-        status.set(AdvanceStatus.APPLY_FAILED);
+        states.set(AdvanceStatus.APPLY_FAILED);
         Targets targets = new Targets();
         BDDMockito.given(mockImporter.importTargets(Mockito.any(Path.class))).willReturn(targets);
 

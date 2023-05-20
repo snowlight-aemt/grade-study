@@ -4,19 +4,19 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 class GradeAdvanceService {
-    private final Status status;
+    private final States states;
     private final TargetsGen targetsGen;
     private final TargetExporter targetExporter;
     private final TargetsImporter targetImporter;
     private final AdvanceApplier advanceApplier;
     private final Path path = Paths.get("build/targets");
 
-    public GradeAdvanceService(Status status,
+    public GradeAdvanceService(States states,
                                TargetsGen targetsGen,
                                TargetExporter targetExporter,
                                TargetsImporter targetImporter,
                                AdvanceApplier advanceApplier) {
-        this.status = status;
+        this.states = states;
         this.targetsGen = targetsGen;
         this.targetExporter = targetExporter;
         this.targetImporter = targetImporter;
@@ -24,11 +24,11 @@ class GradeAdvanceService {
     }
 
     public AdvanceResult advance() {
-        if (status.get() == AdvanceStatus.COMPLETED)
+        if (states.get() == AdvanceStatus.COMPLETED)
             return AdvanceResult.ALREADY_COMPLETED;
 
         Targets targets;
-        if (status.get() == AdvanceStatus.APPLY_FAILED) {
+        if (states.get() == AdvanceStatus.APPLY_FAILED) {
             targets = targetImporter.importTargets(path);
         } else {
             try {
@@ -47,7 +47,7 @@ class GradeAdvanceService {
         try {
             advanceApplier.apply(targets);
         } catch (Exception e) {
-            status.set(AdvanceStatus.APPLY_FAILED);
+            states.set(AdvanceStatus.APPLY_FAILED);
             return AdvanceResult.TARGET_APPLY_FAILED;
         }
 

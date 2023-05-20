@@ -14,9 +14,9 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
-public class StatusTest {
+public class StatesTest {
     Path path = Paths.get("build/status");
-    Status status = new Status(path);
+    States states = new States(path);
 
     @BeforeEach
     public void setUp() throws IOException {
@@ -25,13 +25,13 @@ public class StatusTest {
 
     @Test
     public void noStatusFile() {
-        AdvanceStatus advanceStatus = status.get();
+        AdvanceStatus advanceStatus = states.get();
         assertThat(advanceStatus).isNull();
     }
 
     @Test
     public void set() throws IOException {
-        status.set(AdvanceStatus.GENERATING);
+        states.set(AdvanceStatus.GENERATING);
 
         List<String> statuses = Files.readAllLines(path);
 
@@ -42,7 +42,7 @@ public class StatusTest {
     public void get() throws IOException {
         FileCopyUtils.copy(AdvanceStatus.GENERATING.name(), new FileWriter(path.toFile()));
 
-        AdvanceStatus advanceStatus = status.get();
+        AdvanceStatus advanceStatus = states.get();
         Assertions.assertThat(advanceStatus).isEqualTo(AdvanceStatus.GENERATING);
     }
 

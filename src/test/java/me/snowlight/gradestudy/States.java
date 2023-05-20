@@ -5,10 +5,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-public class Status {
+public class States {
     private final Path path;
 
-    public Status(Path path) {
+    public States(Path path) {
         this.path = path;
     }
 
