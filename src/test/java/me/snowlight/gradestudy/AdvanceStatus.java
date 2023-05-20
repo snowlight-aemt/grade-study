@@ -1,5 +1,5 @@
 package me.snowlight.gradestudy;
 
 public enum AdvanceStatus {
-    COMPLETED, GENERATING
+    COMPLETED, APPLY_FAILED, GENERATING
 }
