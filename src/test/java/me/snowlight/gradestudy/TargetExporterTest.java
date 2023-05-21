@@ -1,6 +1,7 @@
 package me.snowlight.gradestudy;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -10,10 +11,16 @@ import java.nio.file.Paths;
 import java.util.List;
 
 class TargetExporterTest {
+    private final Path path = Paths.get("build/targets");
+
+    @BeforeEach
+    public void setUp() throws IOException {
+        Files.deleteIfExists(path);
+    }
+
     @Test
     void export() throws IOException {
         TargetExporter targetExporter = new TargetExporter();
-        Path path = Paths.get("build/targets");
         targetExporter.export(path, new Targets(
                 List.of(new User(101, 1),
                         new User(102, 2))));
