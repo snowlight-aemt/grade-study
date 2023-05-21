@@ -1,6 +1,7 @@
 package me.snowlight.gradestudy;
 
 import org.assertj.core.api.Assertions;
+import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
@@ -10,6 +11,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collections;
 
 public class GradeAdvanceServiceTest {
     Path path = Paths.get("build/status");
@@ -98,7 +100,7 @@ public class GradeAdvanceServiceTest {
     @Test
     public void states_applySuccess_when_applyFailed() {
         states.set(AdvanceStatus.APPLY_FAILED);
-        Targets targets = new Targets();
+        Targets targets = new Targets(Collections.emptyList());
         BDDMockito.given(mockImporter.importTargets(Mockito.any(Path.class))).willReturn(targets);
 
         gradeAdvanceService.advance();
