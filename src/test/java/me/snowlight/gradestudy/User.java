@@ -12,6 +12,14 @@ class User {
         this.grade = grade;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public int getGrade() {
+        return grade;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
