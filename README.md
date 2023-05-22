@@ -25,6 +25,7 @@ TargetImporter: 타텟을 파일에서 불러온다.
   * 스프링에 롤백을 활용하기 위해서 
   * 결과 코드를 추가하는 방식 고려 
 * TDD 로 개발을 진행하는 방법
+* DB 에 데이터와 검점을 할 때 사용할 수 있는 방법 (TargetsApplierTest.apply())
 
 ## 동영상 링크
 https://www.youtube.com/watch?v=7P1dJ-VoQb4&list=PLwouWTPuIjUg5gQBL9ajinVkcX4D8BAkI&index=3

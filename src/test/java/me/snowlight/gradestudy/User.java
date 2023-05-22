@@ -5,7 +5,7 @@ import java.util.Objects;
 class User {
 
     private final int id;
-    private final int grade;
+    private int grade;
 
     public User(int id, int grade) {
         this.id = id;
@@ -18,6 +18,10 @@ class User {
 
     public int getGrade() {
         return grade;
+    }
+
+    public void increaseGrade() {
+        this.grade++;
     }
 
     @Override
