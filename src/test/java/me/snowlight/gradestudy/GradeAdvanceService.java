@@ -4,12 +4,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 class GradeAdvanceService {
+    private final static Path DEFAULT_TARGETs_PATH = Paths.get(".", "targets");
     private final States states;
     private final TargetsGen targetsGen;
     private final TargetExporter targetExporter;
     private final TargetsImporter targetImporter;
     private final AdvanceApplier advanceApplier;
-    private final Path path = Paths.get("build/targets");
+    private Path path = DEFAULT_TARGETs_PATH;
 
     public GradeAdvanceService(States states,
                                TargetsGen targetsGen,
@@ -52,5 +53,9 @@ class GradeAdvanceService {
         }
 
         return AdvanceResult.SUCCESS;
+    }
+
+    public void setPath(Path path) {
+        this.path = path;
     }
 }
