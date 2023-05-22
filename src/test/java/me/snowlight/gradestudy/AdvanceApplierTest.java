@@ -10,7 +10,7 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import java.util.*;
 
 @SpringBootTest
-public class TargetsApplierTest {
+public class AdvanceApplierTest {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
@@ -22,9 +22,9 @@ public class TargetsApplierTest {
         int grade = 1;
         givenStu(id, grade);
 
-        TargetsApplier targetsApplier = new TargetsApplier(jdbcTemplate);
+        AdvanceApplier advanceApplier = new AdvanceApplier(jdbcTemplate);
         Targets targets = new Targets(List.of(new User(id, grade)));
-        targetsApplier.apply(targets);
+        advanceApplier.apply(targets);
 
         // TODO DB 에 데이터와 검점을 할 때 사용할 수 있는 방법
         assertStuGrade(id, 2);
@@ -35,11 +35,11 @@ public class TargetsApplierTest {
         clearStu();
         givenStu(101, 1);
 
-        TargetsApplier targetsApplier = new TargetsApplier(jdbcTemplate);
+        AdvanceApplier advanceApplier = new AdvanceApplier(jdbcTemplate);
         Targets targets = new Targets(List.of(new User(101, 1),
                                                 new User(102, 2)));
 
-        ApplyResult applyResult = targetsApplier.apply(targets);
+        ApplyResult applyResult = advanceApplier.apply(targets);
         Collection<GradeCount> cnts = applyResult.getGradeCounts();
 
         Assertions.assertThat(cnts).contains(new GradeCount(2, 1), new GradeCount(3, 1));
@@ -59,10 +59,10 @@ public class TargetsApplierTest {
         this.jdbcTemplate.update("insert into student values (?, ?)", id, grade);
     }
 
-    public class TargetsApplier {
+    public class AdvanceApplier {
         private JdbcTemplate jdbcTemplate;
 
-        public TargetsApplier(JdbcTemplate jdbcTemplate) {
+        public AdvanceApplier(JdbcTemplate jdbcTemplate) {
             this.jdbcTemplate = jdbcTemplate;
         }
 
