@@ -13,11 +13,12 @@ import java.util.*;
 @SpringBootTest
 @ActiveProfiles("test")
 public class AdvanceApplierTest {
-
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    private AdvanceApplier advanceApplier;
     @Autowired
-    GivenHelper givenHelper;
+    private JdbcTemplate jdbcTemplate;
+    @Autowired
+    private GivenHelper givenHelper;
 
     @Test
     void apply() {
@@ -26,7 +27,6 @@ public class AdvanceApplierTest {
         int grade = 1;
         givenHelper.givenStu(id, grade);
 
-        AdvanceApplier advanceApplier = new AdvanceApplier(jdbcTemplate);
         Targets targets = new Targets(List.of(new User(id, grade)));
         advanceApplier.apply(targets);
 
@@ -39,7 +39,6 @@ public class AdvanceApplierTest {
         givenHelper.clearStu();
         givenHelper.givenStu(101, 1);
 
-        AdvanceApplier advanceApplier = new AdvanceApplier(jdbcTemplate);
         Targets targets = new Targets(List.of(new User(101, 1),
                                                 new User(102, 2)));
 

@@ -10,12 +10,12 @@ import org.springframework.test.context.ActiveProfiles;
 @SpringBootTest
 @ActiveProfiles("test")
 public class TargetsGenTest {
-    private final JdbcTemplate jdbcTemplate;
+    private final TargetsGen targetsGen;
     private final GivenHelper givenHelper;
 
     @Autowired
-    public TargetsGenTest(JdbcTemplate jdbcTemplate, GivenHelper givenHelper) {
-        this.jdbcTemplate = jdbcTemplate;
+    public TargetsGenTest(TargetsGen targetsGen, GivenHelper givenHelper) {
+        this.targetsGen = targetsGen;
         this.givenHelper = givenHelper;
     }
 
@@ -26,7 +26,6 @@ public class TargetsGenTest {
         givenHelper.givenStu(102, 2);
         givenHelper.givenStu(103, 3);
 
-        TargetsGen targetsGen = new TargetsGen(jdbcTemplate);
         Targets targets = targetsGen.gen();
 
         Assertions.assertThat(targets.getUsers()).hasSize(3);
