@@ -1,16 +1,19 @@
 package me.snowlight.gradestudy;
 
+import org.springframework.stereotype.Service;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+//@Service
 class GradeAdvanceService {
-    private final static Path DEFAULT_TARGETs_PATH = Paths.get(".", "targets");
+    public final static Path DEFAULT_TARGETS_PATH = Paths.get(".", "targets");
     private final States states;
     private final TargetsGen targetsGen;
     private final TargetExporter targetExporter;
     private final TargetsImporter targetImporter;
     private final AdvanceApplier advanceApplier;
-    private Path path = DEFAULT_TARGETs_PATH;
+    private Path path = DEFAULT_TARGETS_PATH;
 
     public GradeAdvanceService(States states,
                                TargetsGen targetsGen,

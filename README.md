@@ -17,8 +17,8 @@ Status: 프로그램(GradeAdvanceService) 에 상태를 표시.
 GradeAdvanceService: 학생 회원 승급을 담당.  
 AdvanceApplier: 승급이 끝난 학생들을 실제로 적용.  
 TargetGen: 타켓(학생)을 데이터베이스 불러옴. 
-TargetExporter: 타켓을 저장하는 기능 (문제가 있을때 돌아가기 위해서).
-TargetImporter: 타텟을 파일에서 불러온다.
+TargetExporter: 타켓을 저장하는 기능 (문제가 있을때 돌아가기 위해서).  
+TargetImporter: 타텟을 파일에서 불러온다.  
 
 ## 메모
 * 예외(Unchecked)를 사용하는 이유 
@@ -26,6 +26,7 @@ TargetImporter: 타텟을 파일에서 불러온다.
   * 결과 코드를 추가하는 방식 고려 
 * TDD 로 개발을 진행하는 방법
 * DB 에 데이터와 검점을 할 때 사용할 수 있는 방법 (TargetsApplierTest.apply())
+* `@Value` 사용 방법 (의존성 주입) (States.java)
 
 ## 동영상 링크
 https://www.youtube.com/watch?v=7P1dJ-VoQb4&list=PLwouWTPuIjUg5gQBL9ajinVkcX4D8BAkI&index=3

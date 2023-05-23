@@ -11,18 +11,20 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("test")
 public class TargetsGenTest {
     private final JdbcTemplate jdbcTemplate;
+    private final GivenHelper givenHelper;
 
     @Autowired
-    public TargetsGenTest(JdbcTemplate jdbcTemplate) {
+    public TargetsGenTest(JdbcTemplate jdbcTemplate, GivenHelper givenHelper) {
         this.jdbcTemplate = jdbcTemplate;
+        this.givenHelper = givenHelper;
     }
 
     @Test
     void gen() {
-        clearStu();
-        givenStu(101, 1);
-        givenStu(102, 2);
-        givenStu(103, 3);
+        givenHelper.clearStu();
+        givenHelper.givenStu(101, 1);
+        givenHelper.givenStu(102, 2);
+        givenHelper.givenStu(103, 3);
 
         TargetsGen targetsGen = new TargetsGen(jdbcTemplate);
         Targets targets = targetsGen.gen();
@@ -32,13 +34,4 @@ public class TargetsGenTest {
                                                             new User(102, 2),
                                                             new User(103, 3));
     }
-
-    private void clearStu() {
-        this.jdbcTemplate.update("truncate table student");
-    }
-
-    private void givenStu(int id, int grade) {
-        this.jdbcTemplate.update("insert into student values (?, ?)", id, grade);
-    }
-
 }

@@ -4,3 +4,6 @@ spring:
     url: jdbc:mysql://localhost:13306/snow
     username: snow
     password: snow
+
+states:
+  path: "build/states"

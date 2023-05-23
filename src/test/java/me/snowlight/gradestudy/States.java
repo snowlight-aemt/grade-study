@@ -1,14 +1,19 @@
 package me.snowlight.gradestudy;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
+@Component
 public class States {
     private final Path path;
 
-    public States(Path path) {
+    // TODO @Value 사용 방법 (의존성 주입)
+    public States(@Value("${states.path}") Path path) {
         this.path = path;
     }
 

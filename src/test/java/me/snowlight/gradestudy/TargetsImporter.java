@@ -1,11 +1,14 @@
 package me.snowlight.gradestudy;
 
+import org.springframework.stereotype.Service;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 class TargetsImporter {
     public Targets importTargets(Path path) {
         if (!Files.exists(path)) throw new NoTargetsFileException();
