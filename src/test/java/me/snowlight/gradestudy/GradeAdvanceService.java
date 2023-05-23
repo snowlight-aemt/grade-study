@@ -5,9 +5,9 @@ import org.springframework.stereotype.Service;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-//@Service
-class GradeAdvanceService {
-    public final static Path DEFAULT_TARGETS_PATH = Paths.get(".", "targets");
+@Service
+ class GradeAdvanceService {
+    public final static Path DEFAULT_TARGETS_PATH = Paths.get("build", "/targets");
     private final States states;
     private final TargetsGen targetsGen;
     private final TargetExporter targetExporter;

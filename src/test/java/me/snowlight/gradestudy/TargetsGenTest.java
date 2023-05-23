@@ -4,27 +4,26 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
 @ActiveProfiles("test")
 public class TargetsGenTest {
     private final TargetsGen targetsGen;
-    private final GivenHelper givenHelper;
+    private final GivenAndAssertHelper givenAndAssertHelper;
 
     @Autowired
-    public TargetsGenTest(TargetsGen targetsGen, GivenHelper givenHelper) {
+    public TargetsGenTest(TargetsGen targetsGen, GivenAndAssertHelper givenAndAssertHelper) {
         this.targetsGen = targetsGen;
-        this.givenHelper = givenHelper;
+        this.givenAndAssertHelper = givenAndAssertHelper;
     }
 
     @Test
     void gen() {
-        givenHelper.clearStu();
-        givenHelper.givenStu(101, 1);
-        givenHelper.givenStu(102, 2);
-        givenHelper.givenStu(103, 3);
+        givenAndAssertHelper.clearStu();
+        givenAndAssertHelper.givenStu(101, 1);
+        givenAndAssertHelper.givenStu(102, 2);
+        givenAndAssertHelper.givenStu(103, 3);
 
         Targets targets = targetsGen.gen();
 
