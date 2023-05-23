@@ -16,13 +16,15 @@ public class AdvanceApplierTest {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
+    @Autowired
+    GivenHelper givenHelper;
 
     @Test
     void apply() {
-        clearStu();
+        givenHelper.clearStu();
         int id = 101;
         int grade = 1;
-        givenStu(id, grade);
+        givenHelper.givenStu(id, grade);
 
         AdvanceApplier advanceApplier = new AdvanceApplier(jdbcTemplate);
         Targets targets = new Targets(List.of(new User(id, grade)));
@@ -34,8 +36,8 @@ public class AdvanceApplierTest {
 
     @Test
     void applyResult() {
-        clearStu();
-        givenStu(101, 1);
+        givenHelper.clearStu();
+        givenHelper.givenStu(101, 1);
 
         AdvanceApplier advanceApplier = new AdvanceApplier(jdbcTemplate);
         Targets targets = new Targets(List.of(new User(101, 1),
@@ -51,14 +53,4 @@ public class AdvanceApplierTest {
         sqlRowSet.next();
         Assertions.assertThat(sqlRowSet.getInt("grade")).isEqualTo(expGrade);
     }
-
-
-    private void clearStu() {
-        this.jdbcTemplate.update("truncate table student");
-    }
-
-    private void givenStu(int id, int grade) {
-        this.jdbcTemplate.update("insert into student values (?, ?)", id, grade);
-    }
-
 }
