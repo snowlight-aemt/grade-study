@@ -114,4 +114,13 @@ public class GradeAdvanceServiceTest {
 
     }
 
+    @Test
+    void targetsImporter_states_failed() {
+        this.states.set(AdvanceStatus.APPLY_FAILED);
+        BDDMockito.given(this.mockImporter.importTargets(Mockito.any(Path.class)))
+                .willThrow(new RuntimeException("!"));
+
+        AdvanceResult advance = this.gradeAdvanceService.advance();
+        Assertions.assertThat(advance).isEqualTo(AdvanceResult.TARGET_IMPORT_FAILED);
+    }
 }

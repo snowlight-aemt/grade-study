@@ -33,7 +33,11 @@ import java.nio.file.Paths;
 
         Targets targets;
         if (states.get() == AdvanceStatus.APPLY_FAILED) {
-            targets = targetImporter.importTargets(path);
+            try {
+                targets = targetImporter.importTargets(path);
+            } catch (Exception e) {
+                return AdvanceResult.TARGET_IMPORT_FAILED;
+            }
         } else {
             try {
                 targets = targetsGen.gen();
