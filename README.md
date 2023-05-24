@@ -28,6 +28,7 @@ TargetImporter: 타텟을 파일에서 불러온다.
 * DB 에 데이터와 검점을 할 때 사용할 수 있는 방법 (TargetsApplierTest.apply())
 * `@Value` 사용 방법 (의존성 주입) (States.java)
 * `GivenAndAssertHelper` 마틴 파울러 [ObjectMother](https://martinfowler.com/bliki/ObjectMother.html) 
+* `com.spencerwi:Either` 라이브러리(함수형 프로그래밍에 자료구조?) 를 사용하여 리팩토링
 
 ## 동영상 링크
 https://www.youtube.com/watch?v=7P1dJ-VoQb4&list=PLwouWTPuIjUg5gQBL9ajinVkcX4D8BAkI&index=3
