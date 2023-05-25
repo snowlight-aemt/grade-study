@@ -7,10 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.sql.Array;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,9 +39,9 @@ public class TenThousandInsertTest {
     void insert() {
         final String sql = "INSERT INTO student (stu_id, grade) VALUES (?, ?)";
 
-        IntStream range = IntStream.rangeClosed(0, 10000);
+        int count = 10000;
+        IntStream range = IntStream.rangeClosed(1, count);
         Collection<List<Integer>> values = range.boxed().collect(Collectors.groupingBy(o -> o / 1000)).values();
-//
         LongAdder adder = new LongAdder();
         values.forEach(cnts -> {
             this.jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
@@ -53,9 +56,15 @@ public class TenThousandInsertTest {
                     return cnts.size();
                 }
             });
-            adder.increment();
-            System.out.println("Processing ... " + (cnts.size() * adder.intValue()));
+            adder.add(cnts.size());
+            System.out.println("Processing ... " + (adder.intValue()));
         });
+
+        List<User> users = this.jdbcTemplate.query(
+                "select * from student",
+                (rs, rowNum) -> new User(rs.getInt("stu_id"), rs.getInt("grade")));
+
+        Assertions.assertThat(users).hasSize(count);
 
     }
 }
