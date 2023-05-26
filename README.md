@@ -6,11 +6,12 @@
 * mysql 8.0.32
 
 ## 내용
-학생 승급 회원 승급
+학생 승급 회원 승급 일관 처리
 
 ## 목적
 * TDD 코딩을 배워보자
 * 설계하는 방법에 대해서
+* 승급 일관 업데이트
 
 ## 정리 (요약)
 Status: 프로그램(GradeAdvanceService) 에 상태를 표시.  
@@ -19,6 +20,7 @@ AdvanceApplier: 승급이 끝난 학생들을 실제로 적용.
 TargetGen: 타켓(학생)을 데이터베이스 불러옴. 
 TargetExporter: 타켓을 저장하는 기능 (문제가 있을때 돌아가기 위해서).  
 TargetImporter: 타텟을 파일에서 불러온다.  
+TargetImporter: 타텟 파일 로딩
 
 ## 메모
 * 예외(Unchecked)를 사용하는 이유 
