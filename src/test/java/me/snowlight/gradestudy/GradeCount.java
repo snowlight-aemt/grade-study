@@ -6,6 +6,14 @@ class GradeCount {
     private int grade;
     private int count;
 
+    public int getGrade() {
+        return grade;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
     public GradeCount(int grade, int count) {
         this.grade = grade;
         this.count = count;

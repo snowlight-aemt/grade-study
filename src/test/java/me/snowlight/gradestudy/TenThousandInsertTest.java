@@ -39,7 +39,7 @@ public class TenThousandInsertTest {
     void insert() {
         final String sql = "INSERT INTO student (stu_id, grade) VALUES (?, ?)";
 
-        int count = 10000;
+        int count = 100_000;
         IntStream range = IntStream.rangeClosed(1, count);
         Collection<List<Integer>> values = range.boxed().collect(Collectors.groupingBy(o -> o / 1000)).values();
         LongAdder adder = new LongAdder();
